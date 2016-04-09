@@ -19,8 +19,8 @@ public class CompressionDemo {
   }
   
   public static void main(String[] args) {
+	  
     compressFile("original.txt", "compressed.txt");
-    
     decompressFile("compressed.txt", "decompressed.txt");
   }
 }

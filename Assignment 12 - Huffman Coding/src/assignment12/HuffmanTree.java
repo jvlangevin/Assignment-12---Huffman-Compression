@@ -10,13 +10,14 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
  * Implements file compression and decompression using Huffman's algorithm, which encodes and decodes each character of
- * a file using a binary trie.
+ * a file using a binary trie. 
  * 
  * @author
  */
@@ -98,18 +99,18 @@ public class HuffmanTree {
 		 *         nodes are equal
 		 */
 		public int compareTo(Node rhs) {
-			//TODO
-			if(this.weight < rhs.weight){
+			// TODO
+			if (this.weight < rhs.weight) {
 				return -1;
 			}
-			else if(this.weight > rhs.weight){
+			else if (this.weight > rhs.weight) {
 				return 1;
 			}
-			else{
-				if(this.getLeftmostNode().symbol < rhs.getLeftmostNode().symbol){
+			else {
+				if (this.getLeftmostNode().symbol < rhs.getLeftmostNode().symbol) {
 					return -1;
 				}
-				if(this.getLeftmostNode().symbol > rhs.getLeftmostNode().symbol){
+				if (this.getLeftmostNode().symbol > rhs.getLeftmostNode().symbol) {
 					return 1;
 				}
 			}
@@ -119,14 +120,39 @@ public class HuffmanTree {
 			// (Hint: Use the ASCII value of the leftmost node in the tree)
 			// (See lecture 22 for details)
 		}
-		
-		private Node getLeftmostNode(){
-			
+
+		private Node getLeftmostNode() {
+
 			Node current = this;
-			while(current.leftChild != null){
+			while (current.leftChild != null) {
 				current = current.leftChild;
 			}
 			return current;
+		}
+		
+		private boolean isRoot(){
+			if(parent == null){
+				return true;
+			}
+			return false;
+		}
+		
+		private boolean isLeftChild(){
+			if(!isRoot()){
+				if(parent.leftChild.equals(this)){
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		private boolean isRightChild(){
+			if(!isRoot()){
+				if(parent.rightChild.equals(this)){
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 
@@ -147,7 +173,7 @@ public class HuffmanTree {
 	 *            - output file of compressed data
 	 */
 	public void compressFile(File infile, File outfile) {
-		
+
 		symbols = new HashMap<Integer, Node>();
 		data = new ArrayList<Integer>();
 
@@ -157,7 +183,7 @@ public class HuffmanTree {
 
 			// build Huffman tree using frequency information
 			createTree();
-
+			
 			// write character and frequencies to beginning of compressed file
 			writeEncodingInfo(out);
 
@@ -330,60 +356,55 @@ public class HuffmanTree {
 	 * Constructs a Huffman tree to represent bit codes for each character. (See algorithm and examples in Lecture 22.)
 	 */
 	private void createTree() {
-		
+
 		PriorityQueue<Node> pq = new PriorityQueue<Node>();
 		pq.addAll(symbols.values());
-		//TODO
-		
-		/* The priority queue picks the node based upon the weight first, then the value of the (leftmost) symbol
+		// TODO
+
+		/*
+		 * The priority queue picks the node based upon the weight first, then the value of the (leftmost) symbol
 		 * 
-		 * Here is what my original.text generates (string of "A A A CEG")
-		 * Character value 1st: 0 (EOF)  Weight: 1
-		 * Character value 2nd: 67 (C)   Weight: 1
-		 * Character value 3rd: 69 (E)   Weight: 1
-		 * Character value 4th: 71 (G)   Weight: 1
-		 * Character value 5th: 32 (' ') Weight: 3
-		 * Character value 6th: 65 (A)   Weight: 3
+		 * Here is what my original.text generates (string of "A A A CEG") Character value 1st: 0 (EOF) Weight: 1
+		 * Character value 2nd: 67 (C) Weight: 1 Character value 3rd: 69 (E) Weight: 1 Character value 4th: 71 (G)
+		 * Weight: 1 Character value 5th: 32 (' ') Weight: 3 Character value 6th: 65 (A) Weight: 3
 		 * 
 		 */
-		
-		while(pq.size()>1){
-			
-			//create pointers for the nodes we are removing			
+
+		while (pq.size() > 1) {
+
+			// create pointers for the nodes we are removing
 			Node node1 = pq.remove();
 			Node node2 = pq.remove();
-			
-			//if node1 weighs less than node 2 or in case of a tie, node1's symbol is less than node 2
-			if(node1.compareTo(node2) < 0)
-			{
-				//then create a new node with the Node(lhs, rhs) constructor 
-				//which will add node 1 to the left and node 2 to the right
+
+			// if node1 weighs less than node 2 or in case of a tie, node1's symbol is less than node 2
+			if (node1.compareTo(node2) < 0) {
+				// then create a new node with the Node(lhs, rhs) constructor
+				// which will add node 1 to the left and node 2 to the right
 				Node parent = new Node(node1, node2);
-				
-				
-				//add parent (not root) back into the queue
+				node1.parent = parent;
+				node2.parent = parent;
+
+				// add parent (not root) back into the queue
 				pq.add(parent);
 			}
-			
-			
-			//if node2 weighs less or in case of a tie it's symbol is of less value than node1's symbol
-			else{
-				
-				//then create a new node with the Node(lhs, rhs) constructor 
-				//which will add node 2 to the left and node 1 to the right instead
+
+			// if node2 weighs less or in case of a tie it's symbol is of less value than node1's symbol
+			else {
+
+				// then create a new node with the Node(lhs, rhs) constructor
+				// which will add node 2 to the left and node 1 to the right instead
 				Node parent = new Node(node2, node1);
-				
-				
-				//add parent (not root) back into the queue
+				node1.parent = parent;
+				node2.parent = parent;
+
+				// add parent (not root) back into the queue
 				pq.add(parent);
 			}
-			
 		}
-		
-		//the last item in the priority queue is the node where everything is combined. this is our root.
+
+		// the last item in the priority queue is the node where everything is combined. this is our root.
 		root = pq.remove();
 
-		
 		// FILL IN -- use "pq" to construct a Huffman tree.
 
 		// Repeatedly merge the lowest weight trees and add the new tree
@@ -392,8 +413,8 @@ public class HuffmanTree {
 		// to be the full tree.
 
 		// TO VISUALIZE the binary trie, use the huffmanToDot method
-		
-		//so we can visualize the tree before we do the getCode(ch) method
+
+		// so we can visualize the tree before we do the getCode(ch) method
 		huffmanToDot("test1.dot");
 	}
 
@@ -408,22 +429,40 @@ public class HuffmanTree {
 	 *            - character to be encoded
 	 */
 	private int[] getCode(int ch) {
-		//TODO
+		// TODO
 		// FILL IN -- do not return null
 
 		// Start at the node containing ch
 		// (look it up in the symbols map, which is already built for you)
 		Node start = symbols.get(ch);
-		
+
 		// Traverse up the tree computing the character's code
 		// See the algorithm described in the assignment and lecture 22
+
+		LinkedList<Integer> codeList = new LinkedList<>();
 		
+		while(start.parent != null){
+			if(start.isLeftChild()){
+				codeList.addFirst(0);
+			}
+			if(start.isRightChild()){
+				codeList.addFirst(1);
+			}
+			start = start.parent;
+		}
 		
+		int[] codeArray = new int[codeList.size()];
+		
+		for(int i = 0; i < codeArray.length; i++){
+			codeArray[i] = codeList.get(i);
+		}
+		
+		return codeArray;
+
 		//
 		// HINT: since you don't know the length of the bit code to start, build a
 		// String or List of 0s and 1s and then convert to an int array when done
 		// You can easily pre-append to the front of a list.
-		return null;
 	}
 
 	/**
@@ -477,9 +516,5 @@ public class HuffmanTree {
 			System.out.println(e);
 		}
 	}
-	
 
-	
-	
-	
 }
