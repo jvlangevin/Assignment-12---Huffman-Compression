@@ -1,0 +1,25 @@
+graph Tree {
+	node [shape=record]
+
+	node705927765 [label = "<f0> |<f1>   10|<f2> "]
+	node705927765:f0 -- node366712642:f1
+	node366712642 [label = "<f0> |<f1>   4|<f2> "]
+	node366712642:f0 -- node1829164700:f1
+	node1829164700 [label = "<f0> |<f1>   2|<f2> "]
+	node1829164700:f0 -- node2018699554:f1
+	node2018699554 [label = "<f0> |<f1> EOF 1|<f2> "]
+	node1829164700:f2 -- node1311053135:f1
+	node1311053135 [label = "<f0> |<f1> C 1|<f2> "]
+	node366712642:f2 -- node118352462:f1
+	node118352462 [label = "<f0> |<f1>   2|<f2> "]
+	node118352462:f0 -- node1550089733:f1
+	node1550089733 [label = "<f0> |<f1> E 1|<f2> "]
+	node118352462:f2 -- node865113938:f1
+	node865113938 [label = "<f0> |<f1> G 1|<f2> "]
+	node705927765:f2 -- node1442407170:f1
+	node1442407170 [label = "<f0> |<f1>   6|<f2> "]
+	node1442407170:f0 -- node1028566121:f1
+	node1028566121 [label = "<f0> |<f1> space 3|<f2> "]
+	node1442407170:f2 -- node1118140819:f1
+	node1118140819 [label = "<f0> |<f1> A 3|<f2> "]
+}

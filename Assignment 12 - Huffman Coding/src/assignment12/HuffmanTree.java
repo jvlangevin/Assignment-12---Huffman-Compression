@@ -99,17 +99,17 @@ public class HuffmanTree {
 		 */
 		public int compareTo(Node rhs) {
 			//TODO
-			if(weight < rhs.weight){
+			if(this.weight < rhs.weight){
 				return -1;
 			}
-			else if(weight > rhs.weight){
+			else if(this.weight > rhs.weight){
 				return 1;
 			}
 			else{
-				if(getLeftmostNode(this).symbol < rhs.symbol){
+				if(this.getLeftmostNode().symbol < rhs.getLeftmostNode().symbol){
 					return -1;
 				}
-				if(getLeftmostNode(this).symbol > rhs.symbol){
+				if(this.getLeftmostNode().symbol > rhs.getLeftmostNode().symbol){
 					return 1;
 				}
 			}
@@ -118,6 +118,15 @@ public class HuffmanTree {
 			// DON'T FORGET to use a tie-breaker
 			// (Hint: Use the ASCII value of the leftmost node in the tree)
 			// (See lecture 22 for details)
+		}
+		
+		private Node getLeftmostNode(){
+			
+			Node current = this;
+			while(current.leftChild != null){
+				current = current.leftChild;
+			}
+			return current;
 		}
 	}
 
@@ -326,11 +335,54 @@ public class HuffmanTree {
 		pq.addAll(symbols.values());
 		//TODO
 		
-		while(!pq.isEmpty()){
+		/* The priority queue picks the node based upon the weight first, then the value of the (leftmost) symbol
+		 * 
+		 * Here is what my original.text generates (string of "A A A CEG")
+		 * Character value 1st: 0 (EOF)  Weight: 1
+		 * Character value 2nd: 67 (C)   Weight: 1
+		 * Character value 3rd: 69 (E)   Weight: 1
+		 * Character value 4th: 71 (G)   Weight: 1
+		 * Character value 5th: 32 (' ') Weight: 3
+		 * Character value 6th: 65 (A)   Weight: 3
+		 * 
+		 */
+		
+		while(pq.size()>1){
+			
+			//create pointers for the nodes we are removing			
+			Node node1 = pq.remove();
+			Node node2 = pq.remove();
+			
+			//if node1 weighs less than node 2 or in case of a tie, node1's symbol is less than node 2
+			if(node1.compareTo(node2) < 0)
+			{
+				//then create a new node with the Node(lhs, rhs) constructor 
+				//which will add node 1 to the left and node 2 to the right
+				Node parent = new Node(node1, node2);
+				
+				
+				//add parent (not root) back into the queue
+				pq.add(parent);
+			}
+			
+			
+			//if node2 weighs less or in case of a tie it's symbol is of less value than node1's symbol
+			else{
+				
+				//then create a new node with the Node(lhs, rhs) constructor 
+				//which will add node 2 to the left and node 1 to the right instead
+				Node parent = new Node(node2, node1);
+				
+				
+				//add parent (not root) back into the queue
+				pq.add(parent);
+			}
 			
 		}
-		Node parent = new Node(pq.remove(), pq.remove());
-		pq.add(parent);
+		
+		//the last item in the priority queue is the node where everything is combined. this is our root.
+		root = pq.remove();
+
 		
 		// FILL IN -- use "pq" to construct a Huffman tree.
 
@@ -340,6 +392,9 @@ public class HuffmanTree {
 		// to be the full tree.
 
 		// TO VISUALIZE the binary trie, use the huffmanToDot method
+		
+		//so we can visualize the tree before we do the getCode(ch) method
+		huffmanToDot("test1.dot");
 	}
 
 	/**
@@ -358,9 +413,12 @@ public class HuffmanTree {
 
 		// Start at the node containing ch
 		// (look it up in the symbols map, which is already built for you)
-
+		Node start = symbols.get(ch);
+		
 		// Traverse up the tree computing the character's code
 		// See the algorithm described in the assignment and lecture 22
+		
+		
 		//
 		// HINT: since you don't know the length of the bit code to start, build a
 		// String or List of 0s and 1s and then convert to an int array when done
@@ -420,13 +478,8 @@ public class HuffmanTree {
 		}
 	}
 	
-	private Node getLeftmostNode(Node n){
-		
-		Node current = n;
-		while(current.leftChild != null){
-			current = current.leftChild;
-		}
-		return current;
-	}
+
+	
+	
 	
 }
