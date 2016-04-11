@@ -1,0 +1,53 @@
+graph Tree {
+	node [shape=record]
+
+	node1908153060 [label = "<f0> |<f1>   29|<f2> "]
+	node1908153060:f0 -- node116211441:f1
+	node116211441 [label = "<f0> |<f1> tab 12|<f2> "]
+	node1908153060:f2 -- node607635164:f1
+	node607635164 [label = "<f0> |<f1>   17|<f2> "]
+	node607635164:f0 -- node529116035:f1
+	node529116035 [label = "<f0> |<f1>   7|<f2> "]
+	node529116035:f0 -- node242481580:f1
+	node242481580 [label = "<f0> |<f1>   3|<f2> "]
+	node242481580:f0 -- node1627800613:f1
+	node1627800613 [label = "<f0> |<f1> H 1|<f2> "]
+	node242481580:f2 -- node2065530879:f1
+	node2065530879 [label = "<f0> |<f1>   2|<f2> "]
+	node2065530879:f0 -- node697960108:f1
+	node697960108 [label = "<f0> |<f1> EOF 1|<f2> "]
+	node2065530879:f2 -- node943010986:f1
+	node943010986 [label = "<f0> |<f1> newline 1|<f2> "]
+	node529116035:f2 -- node1807837413:f1
+	node1807837413 [label = "<f0> |<f1>   4|<f2> "]
+	node1807837413:f0 -- node2066940133:f1
+	node2066940133 [label = "<f0> |<f1>   2|<f2> "]
+	node2066940133:f0 -- node48612937:f1
+	node48612937 [label = "<f0> |<f1>  1|<f2> "]
+	node2066940133:f2 -- node325333723:f1
+	node325333723 [label = "<f0> |<f1> A 1|<f2> "]
+	node1807837413:f2 -- node1937962514:f1
+	node1937962514 [label = "<f0> |<f1>   2|<f2> "]
+	node1937962514:f0 -- node274064559:f1
+	node274064559 [label = "<f0> |<f1> B 1|<f2> "]
+	node1937962514:f2 -- node1018081122:f1
+	node1018081122 [label = "<f0> |<f1> C 1|<f2> "]
+	node607635164:f2 -- node242131142:f1
+	node242131142 [label = "<f0> |<f1>   10|<f2> "]
+	node242131142:f0 -- node1782113663:f1
+	node1782113663 [label = "<f0> |<f1>   4|<f2> "]
+	node1782113663:f0 -- node1433867275:f1
+	node1433867275 [label = "<f0> |<f1>   2|<f2> "]
+	node1433867275:f0 -- node476800120:f1
+	node476800120 [label = "<f0> |<f1> D 1|<f2> "]
+	node1433867275:f2 -- node1744347043:f1
+	node1744347043 [label = "<f0> |<f1> E 1|<f2> "]
+	node1782113663:f2 -- node1254526270:f1
+	node1254526270 [label = "<f0> |<f1>   2|<f2> "]
+	node1254526270:f0 -- node662441761:f1
+	node662441761 [label = "<f0> |<f1> F 1|<f2> "]
+	node1254526270:f2 -- node1618212626:f1
+	node1618212626 [label = "<f0> |<f1> G 1|<f2> "]
+	node242131142:f2 -- node1129670968:f1
+	node1129670968 [label = "<f0> |<f1> space 6|<f2> "]
+}
