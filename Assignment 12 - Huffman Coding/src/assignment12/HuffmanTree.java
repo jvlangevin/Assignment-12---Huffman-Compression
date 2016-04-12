@@ -99,7 +99,7 @@ public class HuffmanTree {
 		 *         nodes are equal
 		 */
 		public int compareTo(Node rhs) {
-			// TODO
+
 			if (this.weight < rhs.weight) {
 				return -1;
 			}
@@ -359,7 +359,6 @@ public class HuffmanTree {
 
 		PriorityQueue<Node> pq = new PriorityQueue<Node>();
 		pq.addAll(symbols.values());
-		// TODO
 
 		/*
 		 * The priority queue picks the node based upon the weight first, then the value of the (leftmost) symbol
@@ -429,16 +428,11 @@ public class HuffmanTree {
 	 *            - character to be encoded
 	 */
 	private int[] getCode(int ch) {
-		// TODO
-		// FILL IN -- do not return null
 
-		// Start at the node containing ch
-		// (look it up in the symbols map, which is already built for you)
 		Node start = symbols.get(ch);
 
 		// Traverse up the tree computing the character's code
 		// See the algorithm described in the assignment and lecture 22
-
 		LinkedList<Integer> codeList = new LinkedList<>();
 		
 		while(start.parent != null){
