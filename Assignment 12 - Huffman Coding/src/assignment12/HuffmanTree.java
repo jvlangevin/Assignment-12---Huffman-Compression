@@ -193,6 +193,7 @@ public class HuffmanTree {
 			for (int ch : data) {
 				bout.writeBits(getCode(ch & 0xff));
 			}
+			bout.close();
 		}
 		catch (IOException e) {
 			System.err.println(e);
@@ -229,6 +230,7 @@ public class HuffmanTree {
 			for (int i : data) {
 				out.write(i);
 			}
+			out.close();
 		}
 		catch (IOException e) {
 			System.err.println(e);
